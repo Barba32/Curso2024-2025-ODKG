@@ -1,0 +1,30 @@
+# Retrieve neighborhoods with the links to Wikidata
+
+SELECT ?barrio ?wikidata_barrio
+WHERE {
+    ?barrio <http://www.w3.org/2002/07/owl#sameAs> ?wikidata_barrio .
+}
+
+# Retrieve bicycle spots with neighborhood and Wikidata links
+
+PREFIX ns: <http://www.bikeradar.es/ontology/ont#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?bicycleSpot ?barrio ?wikidataBarrio WHERE {
+    # Obtener los BicycleParkingSpot
+    ?bicycleSpot a ns:BicycleParkingSpot .
+    
+    # Obtener la URI del barrio
+    ?barrio a ns:Barrio .
+    
+    ?barrio owl:sameAs ?wikidataBarrio .
+}
+
+# Retrieve neighborhoods, the districts they belong to, and the link to the district on Wikidata
+
+SELECT ?barrio ?distrito ?wikidata_distrito
+WHERE {
+    ?barrio a <http://www.bikeradar.es/ontology/ont#Barrio> ;
+             <http://www.bikeradar.es/ontology/ont#isInDistrito> ?distrito ;
+             <http://www.w3.org/2002/07/owl#sameAs> ?wikidata_distrito .
+}
